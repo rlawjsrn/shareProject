@@ -30,7 +30,7 @@ public class PetCafeListServlet extends HttpServlet {
 		Gson gson = new GsonBuilder().create();
 		
 		PetCafeDAO dao = new PetCafeDAO();
-		List<PetCafeVO> list = dao.getCafeList();
+		List<PetCafeOneVO> list = dao.getCafeList();
 		
 		out.println(gson.toJson(list));
 	}

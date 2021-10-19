@@ -8,23 +8,25 @@ import co.yedam.common.DAO;
 
 public class PetCafeDAO extends DAO {
 	
-	public List<PetCafeVO> getCafeList(){
+	//카페 전체조회
+	public List<PetCafeOneVO> getCafeList(){
 		connect();
-		List<PetCafeVO> list = new ArrayList<>();
+		List<PetCafeOneVO> list = new ArrayList<>();
 		String sql = "select * from cafe order by 1";
 		try {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
+			
 			while(rs.next()) {
-				PetCafeVO vo = new PetCafeVO();
-				vo.setCafe_num(rs.getInt("cafe_num"));
-				vo.setCafe_name(rs.getString("cafe_name"));
-				vo.setCafe_add(rs.getString("cafe_add"));
-				vo.setCafe_phone(rs.getString("cafe_phone"));
-				vo.setCafe_time(rs.getString("cafe_time"));
-				vo.setCafe_type(rs.getString("cafe_type"));
-				vo.setCafe_image(rs.getString("cafe_image"));
-				vo.setCafe_score(rs.getString("cafe_score"));
+				PetCafeOneVO vo = new PetCafeOneVO();
+				vo.setCafeNum(rs.getInt("cafe_num"));
+				vo.setCafeName(rs.getString("cafe_name"));
+				vo.setCafeAdd(rs.getString("cafe_add"));
+				vo.setCafePhone(rs.getString("cafe_phone"));
+				vo.setCafeTime(rs.getString("cafe_time"));
+				vo.setCafeType(rs.getString("cafe_type"));
+				vo.setCafeImage(rs.getString("cafe_image"));
+				vo.setCafeScore(rs.getInt("cafe_score"));
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -35,8 +37,8 @@ public class PetCafeDAO extends DAO {
 		return list;
 	}
 
-	// 파일 업로드 처리
-	public PetCafeVO uploadCafe(String cafe_name, String cafe_address, String cafe_phone, String cafe_time, String cafe_type, String cafe_image) {
+	// 파일 업로드 처리 (카페등록)
+	public PetCafeOneVO uploadCafe(String cafe_name, String cafe_address, String cafe_phone, String cafe_time, String cafe_type, String cafe_image) {
 		connect();
 		String sql = "insert into cafe values(?, ?, ?, ?, ?, ?, ?, 0)";
 		try {
@@ -58,13 +60,13 @@ public class PetCafeDAO extends DAO {
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력.");
 			
-			PetCafeVO vo = new PetCafeVO();
-			vo.setCafe_name(rs.getString("cafe_name"));
-			vo.setCafe_add(rs.getString("cafe_add"));
-			vo.setCafe_phone(rs.getString("cafe_phone"));
-			vo.setCafe_time(rs.getString("cafe_time"));
-			vo.setCafe_type(rs.getString("cafe_type"));
-			vo.setCafe_image(rs.getString("cafe_image"));
+			PetCafeOneVO vo = new PetCafeOneVO();
+			vo.setCafeName(rs.getString("cafe_name"));
+			vo.setCafeAdd(rs.getString("cafe_add"));
+			vo.setCafePhone(rs.getString("cafe_phone"));
+			vo.setCafeTime(rs.getString("cafe_time"));
+			vo.setCafeType(rs.getString("cafe_type"));
+			vo.setCafeImage(rs.getString("cafe_image"));
 			return vo;
 			
 		} catch(SQLException e) {
