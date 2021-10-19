@@ -13,14 +13,17 @@ public class DAO {
 	protected ResultSet rs;
 	protected PreparedStatement psmt;
 
-	String user = "petcafe";
-	String pass = "1234";
+//	String user = "petcafe";
+//	String pass = "1234";
+	
+	String user = "hr";
+	String pass = "hr";
 	String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
 	protected void connect() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "petcafe", "1234");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "hr", "hr");
 			System.out.println("연결성공.");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
