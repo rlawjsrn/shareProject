@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +16,9 @@
 <script src="../jquery/jquery-3.6.0.min.js"></script>
 
 <script>
+	<%
+	String cafeNum = request.getParameter("cafe_num");
+	%>
 	//윈도우 페이지 여는 순간 onload
 	window.onload = function() { //onload 이벤트는 페이지가 다 로딩된 다음에 실행함.
 		loadCafeOne();
@@ -23,26 +28,29 @@
 		$.ajax({
 			url : '../PetCafeOneServlet',
 			type : 'post', //요청방식
-			data : { //서버로 전송할 데이터 'id=memberId&pw=pswd'
-				cafeNum : 
+			data : { //서버로 전송할 전체 리스트 페이지에서 클릭한 cafe_num 데이터
+				cafeNum : "<%=cafeNum%>"
 			},
 			dataType : 'json',
-			success : function(result) { //result: servlet에서 반환되는 변수명 
+			success : function(result) { //result: servlet에서 반환되는 변수명
+				image.setAttribute('src', '../image/' + result.cafeImage);
+				document.getElementById('cafename').value = result.cafeName;
+				document.getElementById('addr').value = result.cafeAdd;
+				document.getElementById('call').value = result.cafePhone;
+				document.getElementById('time').value = result.cafeTime;
+				document.getElementById('type').value = result.cafeType;
 				console.log(result);
-
-				
 			},
 			error : function(reject) {
 				window.alert('프로그램 실행 오류');
 			}
 		});
 	}
+
 	
 </script>
 <style>
-nav {
-	height: 100px;
-}
+nav { height: 100px; }
 </style>
 </head>
 
@@ -61,7 +69,7 @@ nav {
 	<div class="row">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
-			<img src="#" alt="카페사진">
+			<img src="../image" alt="카페사진" id="image" style="width: 300px;">
 
 			<form action="">
 				카페이름<input type="text" class="form-control" value=""
@@ -104,7 +112,7 @@ nav {
 			</form>
 			<br>
 
-			<form action="#">
+			<form action="#" name="cafeOne">
 				<div class="mb-3 mt-3">
 					<label for="comment">후기글 작성</label>
 					<textarea class="form-control" rows="5" id="comment" name="text"></textarea>
