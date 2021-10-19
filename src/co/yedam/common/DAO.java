@@ -13,11 +13,11 @@ public class DAO {
 	protected ResultSet rs;
 	protected PreparedStatement psmt;
 
-//	String user = "petcafe";
-//	String pass = "1234";
+	String user = "petcafe";
+	String pass = "1234";
 	
-	String user = "hr";
-	String pass = "hr";
+//	String user = "hr";
+//	String pass = "hr";
 	String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
 	protected void connect() {
