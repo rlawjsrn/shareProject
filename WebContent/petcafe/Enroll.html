@@ -30,7 +30,6 @@ form {
 	display: inline-block;
 	height: 100px;
 }
-
 nav {
 	height: 100px;
 }
@@ -79,7 +78,7 @@ nav {
             }
         });
         
-        // 데이터 한건 가지고 div>div:id
+        // 데이터 한 건 가지고 div>div:id
         function creatDiv(row){
         	let divRow = $('<div />').addClass('row');
             $(divRow).append(
@@ -90,7 +89,7 @@ nav {
                 $('<div />').html(row.cafe_time),
                 $('<div />').html(row.cafe_type),
                 $('<div />').html(row.cafe_image),
-                $('<div />').html('<img width="100px" src="../upload/'+row.cafe_image+'">')
+                $('<div />').html('<img width="100px" src="../image/'+row.cafe_image+'">')
             )
             return divRow;
         }

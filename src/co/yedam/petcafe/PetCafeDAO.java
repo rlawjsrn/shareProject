@@ -17,12 +17,14 @@ public class PetCafeDAO extends DAO {
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				PetCafeVO vo = new PetCafeVO();
+				vo.setCafe_num(rs.getInt("cafe_num"));
 				vo.setCafe_name(rs.getString("cafe_name"));
 				vo.setCafe_add(rs.getString("cafe_add"));
 				vo.setCafe_phone(rs.getString("cafe_phone"));
 				vo.setCafe_time(rs.getString("cafe_time"));
 				vo.setCafe_type(rs.getString("cafe_type"));
 				vo.setCafe_image(rs.getString("cafe_image"));
+				vo.setCafe_score(rs.getString("cafe_score"));
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -40,7 +42,7 @@ public class PetCafeDAO extends DAO {
 		try {
 			int nextNum = -1;
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select nvl(max(num), 0) +1 from fileboard");
+			rs = stmt.executeQuery("select nvl(max(num), 0) +1 from cafe");
 			if (rs.next()) {
 				nextNum = rs.getInt(1);
 			}
