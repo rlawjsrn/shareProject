@@ -17,6 +17,12 @@
 	}
 	//전체 조회
 	function cafeList() {
+		let cafeNum = document.getElementById("cafe_num").value;
+		let cafeName = document.getElementById("cafe_name").value;
+		let cafeAdd = document.getElementById("cafe_add").value;
+		let cafeType = document.getElementById("cafe_type").value;
+		let cafeScore = document.getElementById("cafe_score").value;
+		
 		$.ajax({
 			url : '../PetCafeListServlet',
 			type : 'post',
@@ -29,12 +35,29 @@
 			},
 			dataType : 'json',
 			success : function(result) {
+				
+				for (let row of result){
+					$('#list').append(createTd(row));
+				}
 				console.log(result);
 			},
 			error : function(reject) {
 				window.alert('프로그램 실행 오류');
 			}
 		});
+		
+		function createTd(row) {
+			let tdRow = $('<td />').addClass('row');
+			$(tdRow).append(//
+					$('<td />').html(row.cafeNum),//
+					$('<td />').html(row.cafeName),//
+					$('<td />').html(row.cafeAdd),//
+					$('<td />').html(row.cafeType),//
+					$('<td />').html(row.cafeScore)//
+					);
+			
+			return tdRow;
+		}
 	}
 </script>
 
@@ -44,7 +67,7 @@ nav {
 }
 
 th {
-text-align: center;
+	text-align: center;
 }
 </style>
 </head>
@@ -58,18 +81,18 @@ text-align: center;
 		</div>
 	</nav>
 
-	<div class="container mt-3">
-	<br>
+	<div class="container mt-3" id="list">
+		<br>
 		<h2>애견카페 전체리스트</h2>
 		<br>
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th id="num">번호</th>
-					<th id="name">카페명</th>
-					<th id="add">주소</th>
-					<th id="type">유형</th>
-					<th id="score">평점</th>
+					<th id="cafe_num">번호</th>
+					<th id="cafe_name">카페명</th>
+					<th id="cafe_add">주소</th>
+					<th id="cafe_type">유형</th>
+					<th id="cafe_score">평점</th>
 				</tr>
 			</thead>
 			<tbody>
