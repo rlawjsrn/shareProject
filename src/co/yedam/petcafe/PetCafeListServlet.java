@@ -17,25 +17,30 @@ import com.google.gson.GsonBuilder;
 public class PetCafeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public PetCafeListServlet() {
-        super();
-    }
-
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		
-		PrintWriter out = response.getWriter();
-		Gson gson = new GsonBuilder().create();
-		
-		PetCafeDAO dao = new PetCafeDAO();
-		List<PetCafeOneVO> list = dao.getCafeList();
-		
-		out.println(gson.toJson(list));
+	public PetCafeListServlet() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		PetCafeDAO dao = new PetCafeDAO();
+		
+		
+		
+//		PrintWriter out = response.getWriter();
+//
+//		PetCafeDAO dao = new PetCafeDAO();
+//		List<PetCafeOneVO> list = dao.getCafeList();
+//
+//		Gson gson = new GsonBuilder().create();
+//		out.println(gson.toJson(list));
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

@@ -30,6 +30,7 @@ form {
 	display: inline-block;
 	height: 100px;
 }
+
 nav {
 	height: 100px;
 }
@@ -49,13 +50,13 @@ nav {
 
 	<form id='frm' method="post" enctype="multipart/form-data"
 		onsubmit='submitAction(event)'>
-		상호명: <input type="text" name="cafe_name"><br> 
-		주소: <input type="text" name="cafe_address"><br> 
-		전화번호: <input type="text" name="cafe_phone"><br> 
-		영업시간: <input type="text" name="cafe_time"><br> 
-		유형: <input type="text" name="cafe_type"><br> 
-		사진: <input type="file" name="cafe_image"><br> 
-		<input type="submit" value="카페 등록하기">
+		상호명: <input type="text" name="cafe_name"><br> 주소: <input
+			type="text" name="cafe_address"><br> 전화번호: <input
+			type="text" name="cafe_phone"><br> 영업시간: <input
+			type="text" name="cafe_time"><br> 유형: <input type="text"
+			name="cafe_type"><br> 사진: <input type="file"
+			name="cafe_image"><br> <input type="submit"
+			value="카페 등록하기">
 	</form>
 
 	<div id='show'></div>
@@ -63,18 +64,25 @@ nav {
 	<script>
         // 리스트 (이미지 포함)
         $.ajax({
-            url:'../PetCafeListServlet',
-            type: 'get',
+            url : '../AddPetCafeServlet',
+            type : 'post',
+            data : {
+            	name : cafe_name,
+            	add : cafe_address,
+            	phone : cafe_phone,
+            	time : cafe_time,
+            	type : cafe_type,
+            	image : cafe_image          	
+            },
             dataType: 'json',
             success: function(result){
                 //성공시 화면그려주기
                 console.log(result);
-                for(let row of result){
-                	$('#show').append(creatDiv(row));
-                }
+               
             },
             error: function(reject){
                 // 에러발생시 화면그려주기
+            	console.log(reject);
             }
         });
         

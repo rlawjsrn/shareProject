@@ -67,6 +67,7 @@ public class PetCafeDAO extends DAO {
 			vo.setCafeTime(rs.getString("cafe_time"));
 			vo.setCafeType(rs.getString("cafe_type"));
 			vo.setCafeImage(rs.getString("cafe_image"));
+			vo.setCafeScore(rs.getInt(0));
 			return vo;
 			
 		} catch(SQLException e) {

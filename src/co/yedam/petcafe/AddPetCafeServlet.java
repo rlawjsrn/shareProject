@@ -29,26 +29,30 @@ public class AddPetCafeServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		ServletContext context = getServletContext();
-		String saveDir = context.getRealPath("upload");
-		int maxSize = 1024 * 1024 * 30;
-		String encoding = "UTF-8";
-		MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, encoding, new DefaultFileRenamePolicy()); //1. request, 2.saveDir, 3. maxFileSize, 4.encoding, 5. renamePolicy
-		
-		String cafe_name = multi.getParameter("cafe_name");
-		String cafe_address = multi.getParameter("cafe_address");
-		String cafe_phone = multi.getParameter("cafe_phone");
-		String cafe_time = multi.getParameter("cafe_time");
-		String cafe_type = multi.getParameter("cafe_type");
-		String cafe_image = multi.getFilesystemName("cafe_image");
+		String cafeName = request.getParameter("name");
+		String cafeAddress = request.getParameter("add");
+		String cafePhone = request.getParameter("phone");
+		String cafeTime = request.getParameter("time");
+		String cafeType = request.getParameter("type");
+		String cafeImage = request.getParameter("image");
+		System.out.println("앞단 정보:" + cafeName + cafeAddress + cafePhone + cafeTime + cafeType + cafeImage);
 		
 		PetCafeDAO dao = new PetCafeDAO();
-		PetCafeVO vo = dao.uploadCafe(cafe_name, cafe_address, cafe_phone, cafe_time, cafe_type, cafe_image);
+		PetCafeOneVO vo = new PetCafeOneVO();
 		
-		Gson gson = new GsonBuilder().create();
-		response.getWriter().println(gson.toJson(vo));
+		vo.setCafeName(cafeName);
+		vo.setCafeAdd(cafeAddress);
+		vo.setCafePhone(cafePhone);
+		vo.setCafeTime(cafeTime);
+		vo.setCafeType(cafeType);
+		vo.setCafeImage(cafeImage);
 		
-		System.out.println(saveDir);	
+		String dbAdd = dao.checkAdd(vo);
+		int r = -1;
+		
+		if (dbAdd == null || db)
+			
+		response.getWriter().println();
 		
 	}
 
