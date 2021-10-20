@@ -19,7 +19,7 @@ public class MemberServlet extends HttpServlet {
 	}
 
 	// 로그인 서블릿
-	protected void doGet(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response )
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/json;charset=UTF-8");
@@ -28,7 +28,7 @@ public class MemberServlet extends HttpServlet {
 		// request에 담겨있는 값을 서블릿 변수에 담기.
 		String userId = request.getParameter("id");
 		String userPw = request.getParameter("pw");
-		System.out.println("앞단 정보:" + userId + userPw);
+		System.out.println("앞단 정보: " + userId + userPw);
 
 		// DAO호출
 		MemberDAO dao = new MemberDAO();
@@ -48,16 +48,13 @@ public class MemberServlet extends HttpServlet {
 
 		//로그인 일치 검사
 		int r = -1;
-		if (userId == dbId && userPw == dbPw) { //로그인 성공
+		if (userId.equals(dbId) && userPw.equals(dbPw)) { //로그인 성공
 			r = 1;
-			session.setAttribute("sessionId", dbId); //세션에 로그인 한 아이디 담기
 		}else {//로그인 실패
 			r = 0;
 		}
 		
 		System.out.println(r);
-		
-		
 		
 		response.getWriter().println(r);
 	}

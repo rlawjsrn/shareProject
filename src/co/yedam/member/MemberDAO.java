@@ -15,13 +15,13 @@ public class MemberDAO extends DAO {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, memberVO.getUserId());
 			psmt.setString(2, memberVO.getUserPw());
-			psmt.setString(3, memberVO.getUserPhone());
-			psmt.setString(4, memberVO.getUserEmail());
+			psmt.setString(3, memberVO.getUserEmail());
+			psmt.setString(4, memberVO.getUserPhone());
 			
 			int r = psmt.executeUpdate(); // db결과로 나오는 숫자값(몇 건)
 			System.out.println(r + "건 등록");
 
-			return r; // 결과값을 int로도 넘겨줘보기
+			return r;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

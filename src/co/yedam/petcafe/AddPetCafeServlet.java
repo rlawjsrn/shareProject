@@ -47,11 +47,11 @@ public class AddPetCafeServlet extends HttpServlet {
 		vo.setCafeType(cafeType);
 		vo.setCafeImage(cafeImage);
 		
-		String dbAdd = dao.checkAdd(vo);
-		int r = -1;
-		
-		if (dbAdd == null || db)
-			
+//		String dbAdd = dao.checkAdd(vo);
+//		int r = -1;
+//		
+//		if (dbAdd == null || db)
+//			
 		response.getWriter().println();
 		
 	}

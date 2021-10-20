@@ -1,0 +1,52 @@
+create table pet_member (
+user_id  varchar2(10) primary key,
+user_pw varchar2(10) NOT NULL,
+user_name varchar2(100) NOT NULL,
+user_phone varchar2(20),
+user_email  varchar2(100)
+);
+
+CREATE SEQUENCE cafe_num
+START WITH 0001
+INCREMENT BY 1
+NOMAXVALUE
+NOMINVALUE
+NOCACHE;
+
+create table cafe(
+cafe_num NUMBER PRIMARY KEY,
+cafe_name varchar2(100) NOT NULL,
+cafe_add varchar2(100) NOT NULL,
+cafe_phone varchar2(20) NOT NULL,
+cafe_time  varchar2(100),
+cafe_image varchar2(100),
+cafe_type varchar2(100) NOT NULL,
+cafe_score number(2,1) NOT NULL
+);
+
+CREATE SEQUENCE rw_num
+START WITH 0001
+INCREMENT BY 1
+NOMAXVALUE
+NOMINVALUE
+NOCACHE;
+
+create table review (
+rw_num NUMBER PRIMARY KEY,
+rwcafe_num NUMBER,
+rw_id varchar2(10),
+rw_score number(2,1),
+rw_comment varchar2(1000)
+);
+
+ALTER TABLE review 
+ADD CONSTRAINTS fk_rw_id FOREIGN KEY (rw_id) 
+REFERENCES pet_member(user_id);
+
+ALTER TABLE review 
+ADD CONSTRAINTS fk_rwcafe_num FOREIGN KEY (rwcafe_num) 
+REFERENCES cafe(cafe_num);
+
+alter table pet_member drop column user_name;
+
+

@@ -46,6 +46,35 @@
 			}
 		});
 	}
+	
+	//리뷰 등록하기
+	function review() {
+		
+	}
+	
+	
+	//등록된 후기 보여주기
+	function showReview() {
+		$.ajax({
+			url : '../PetCafeOneServlet',
+			type : 'post',
+			data : {
+				writer : memberId,
+				score : cafeScore,
+				content : content
+			},
+			dataType : 'json',
+			success : function(result) {
+				console.log(result);
+				
+			},
+			error : function(reject){
+				console.log(reject);
+				
+			}
+		}) 
+	}
+	
 
 	
 </script>
@@ -59,7 +88,7 @@ nav { height: 100px; }
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img src="../image/로고사진.jpg"
 				alt="Logo" style="width: 100px; align-content: center;"
-				class="rounded-pill"> 어서오시개
+				class="rounded-pill" onclick="location.href='../petcafe/Main.html'"> 어서오시개
 			</a>
 		</div>
 	</nav>
@@ -68,12 +97,13 @@ nav { height: 100px; }
 	<br>
 	<div class="row">
 		<div class="col-sm-2"></div>
-		<div class="col-sm-8">
-			<img src="../image" alt="카페사진" id="image" style="width: 300px;">
-
+		<div class="col-sm-4">
+			<img src="../image" alt="카페사진" id="image" style="width: 550px;">
+		</div>
+		<div class="col-sm-4">
 			<form action="">
 				카페이름<input type="text" class="form-control" value=""
-					style="text-align: center; border: none;" id="cafename"
+					style="text-align: center;" id="cafename"
 					name="cafename"><br> 주소<input type="text"
 					class="form-control" value="" style="text-align: center;" id="addr"
 					name="addr"><br> 연락처<input type="text"
@@ -94,7 +124,7 @@ nav { height: 100px; }
 			<br>
 			<h3>후기게시판</h3>
 			<br>
-			<form action="">
+			<form action="" name="ReviewForm">
 				<table class="table">
 					<thead class="table-dark">
 						<tr>

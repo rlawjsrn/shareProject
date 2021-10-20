@@ -46,8 +46,14 @@
 			}
 		});
 		
-		function createTd(row) {
-			let tdRow = $('<td />').addClass('row');
+		//클릭시 상세페이지로 넘기기
+		$('table').on('click', 'tr', function (event) {
+            window.location.href = '../review/detail.jsp?cafe_num='+$(this).attr('id'); //cafe_num의 id의 값(정보)를 가져온다
+           
+        });
+		
+		function createTd(row) { //열 추가
+			let tdRow = $('<tr />').addClass('').attr('id',row.cafeNum); //열 추가할 때 id의 값을 각 cafeNum으로 지정해줌
 			$(tdRow).append(//
 					$('<td />').html(row.cafeNum),//
 					$('<td />').html(row.cafeName),//
@@ -76,12 +82,12 @@ th {
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img src="../image/로고사진.jpg"
 				alt="Logo" style="width: 100px; align-content: center;"
-				class="rounded-pill"> 어서오시개
+				class="rounded-pill" onclick="location.href='../petcafe/Main.html'"> 어서오시개
 			</a>
 		</div>
 	</nav>
 
-	<div class="container mt-3" id="list">
+	<div class="container mt-3" >
 		<br>
 		<h2>애견카페 전체리스트</h2>
 		<br>
@@ -95,7 +101,7 @@ th {
 					<th id="cafe_score">평점</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="list">
 
 			</tbody>
 		</table>
