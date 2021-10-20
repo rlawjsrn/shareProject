@@ -10,28 +10,6 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
-form {
-	border: 1px dotted blue;
-	padding: 2px;
-}
-
-.row {
-	border: 1px solid red;
-	margin: 1px 5px 25px;
-}
-
-.row>div {
-	display: inline-block;
-	margin: 5px;
-	width: 100px;
-	border: 1px dotted blue;
-}
-
-.row>div>img {
-	display: inline-block;
-	height: 100px;
-}
-
 nav {
 	height: 100px;
 }
@@ -42,55 +20,88 @@ nav {
 
 	<nav class="navbar navbar-expand-xxl bg-dark navbar-dark ">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#"> <img src="../image/로고사진.jpg" alt="Logo"
+			<a class="navbar-brand" href="Main.html"> <img
+				src="../image/로고사진.jpg" alt="Logo"
 				style="width: 100px; align-content: center;" class="rounded-pill">
 				어서오시개
 			</a>
 		</div>
 	</nav>
 
-	<form id='frm' name='addCafeForm' method="post" enctype="multipart/form-data"
-		onsubmit='submitAction(event)'>
-		상호명: <input type="text" name="cafeName" required><br> 
-		주소: <input type="text" name="cafeAdd" id= "cafeAdd" required><br> 
-		전화번호: <input type="text" name="cafePhone" required><br> 
-		영업시간: <input type="text" name="cafeTime" required><br> 
-		유형: <input type="text"	name="cafeType" required><br> 
-		사진: <input type="file"	name="cafeImage"><br> 
-			<input type="submit" value="카페 등록하기" onclick="check()">
-	</form>
+	<div class="container-fluid">
+		<br> <br>
+		<div class="row" style="text-align: center;">
+			<div class="col-sm-12">
+				<h2>카페 등록</h2>
+			</div>
+		</div>
+		<br> <br>
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<form id='frm' name="addCafeForm" method="post"
+					enctype="multipart/form-data" onsubmit='submitAction(event)'>
+					<br>
+					<div class="mb-3 mt-3">
+						상호명: <input type="text" class="form-control" name="cafeName"
+							required>
+					</div>
+					<div class="mb-3">
+						주소: <input type="text" class="form-control" name="cafeAdd"
+							id="cafeAdd" required>
+					</div>
+					<div class="mb-3 mt-3">
+						전화번호: <input type="text" class="form-control" name="cafePhone"
+							required>
+					</div>
+					<div class="mb-3">
+						영업시간: <input type="text" class="form-control" name="cafeTime"
+							required>
+					</div>
+					<div class="mb-3 mt-3">
+						유형: <input type="text" class="form-control" name="cafeType"
+							required>
+					</div>
+					<div class="mb-3">
+						사진: <input type="file" class="form-control" name="cafeImage">
+					</div>
+					<br>
+					<div class="d-grid">
+						<input type="submit" value="카페 등록하기">
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
 
-	<div id='show'></div>
+		<script>
+			//카페 등록
+			function submitAction(ev) {
+				ev.preventDefault();
+				let frm = document.getElementById('frm');
+				let data = new FormData(frm);
 
-	<script>
-	
-	//카페 등록
-        function submitAction(ev) {
-            ev.preventDefault();
-            let frm = document.getElementById('frm');
-            let data = new FormData(frm);
+				//아작스 호출
+				$.ajax({
+					url : '../AddPetCafeServlet',
+					type : $('#frm').attr('method'),
+					data : data,
+					processData : false,
+					contentType : false,
+					dataType : 'json',
+					success : function(result) {
+						alert('카페 등록성공');
+						console.log(result);
 
-            //아작스 호출
-            $.ajax({
-                url: '../AddPetCafeServlet',
-                type: $('#frm').attr('method'),
-                data: data,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: function (result) {
-                    alert('카페 등록성공');
-                    console.log(result);
-
-                	//입력했던 값 삭제
-                    $('#frm>input').not('[type="submit"]').val('');
-                },
-                error: function (reject) {
-                    alert('카페 등록실패');
-                    console.log(reject)
-                }
-            });
-        }
-    </script>
+						//입력했던 값 삭제
+						$('#frm>input').not('[type="submit"]').val('');
+					},
+					error : function(reject) {
+						alert('카페 등록실패');
+						console.log(reject)
+					}
+				});
+			}
+		</script>
 </body>
 </html>
