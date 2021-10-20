@@ -20,14 +20,14 @@ public class PetCafeDAO extends DAO {
 			
 			while(rs.next()) {
 				PetCafeOneVO vo = new PetCafeOneVO();
-				vo.setCafeNum(rs.getInt("cafeNum"));
-				vo.setCafeName(rs.getString("cafeName"));
-				vo.setCafeAdd(rs.getString("cafeAdd"));
-				vo.setCafePhone(rs.getString("cafePhone"));
-				vo.setCafeTime(rs.getString("cafeTime"));
-				vo.setCafeImage(rs.getString("cafeImage"));
-				vo.setCafeType(rs.getString("cafeType"));
-				vo.setCafeScore(rs.getInt("cafeScore"));
+				vo.setCafeNum(rs.getInt("cafe_num"));
+				vo.setCafeName(rs.getString("cafe_name"));
+				vo.setCafeAdd(rs.getString("cafe_add"));
+				vo.setCafePhone(rs.getString("cafe_phone"));
+				vo.setCafeTime(rs.getString("cafe_time"));
+				vo.setCafeImage(rs.getString("cafe_image"));
+				vo.setCafeType(rs.getString("cafe_type"));
+				vo.setCafeScore(rs.getInt("cafe_score"));
 				list.add(vo);
 				System.out.println("vo:"+vo);
 			}

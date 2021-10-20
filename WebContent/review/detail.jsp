@@ -49,7 +49,8 @@
 	
 	//리뷰 등록하기
 	function review() {
-		
+		let content = $('#textarea').val();
+		let score = 
 	}
 	
 	
