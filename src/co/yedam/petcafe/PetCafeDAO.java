@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.yedam.common.DAO;
+import co.yedam.member.MemberVO;
 
 public class PetCafeDAO extends DAO {
 	
@@ -19,15 +20,16 @@ public class PetCafeDAO extends DAO {
 			
 			while(rs.next()) {
 				PetCafeOneVO vo = new PetCafeOneVO();
-				vo.setCafeNum(rs.getInt("cafe_num"));
-				vo.setCafeName(rs.getString("cafe_name"));
-				vo.setCafeAdd(rs.getString("cafe_add"));
-				vo.setCafePhone(rs.getString("cafe_phone"));
-				vo.setCafeTime(rs.getString("cafe_time"));
-				vo.setCafeType(rs.getString("cafe_type"));
-				vo.setCafeImage(rs.getString("cafe_image"));
-				vo.setCafeScore(rs.getInt("cafe_score"));
+				vo.setCafeNum(rs.getInt("cafeNum"));
+				vo.setCafeName(rs.getString("cafeName"));
+				vo.setCafeAdd(rs.getString("cafeAdd"));
+				vo.setCafePhone(rs.getString("cafePhone"));
+				vo.setCafeTime(rs.getString("cafeTime"));
+				vo.setCafeImage(rs.getString("cafeImage"));
+				vo.setCafeType(rs.getString("cafeType"));
+				vo.setCafeScore(rs.getInt("cafeScore"));
 				list.add(vo);
+				System.out.println("vo:"+vo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -37,37 +39,39 @@ public class PetCafeDAO extends DAO {
 		return list;
 	}
 
-	// 파일 업로드 처리 (카페등록)
-	public PetCafeOneVO uploadCafe(String cafe_name, String cafe_address, String cafe_phone, String cafe_time, String cafe_type, String cafe_image) {
+	// 카페등록 -> db에 저장
+	public PetCafeOneVO uploadCafe(String cafeName, String cafeAdd, String cafePhone, String cafeTime, String cafeImage, String cafeType) {
 		connect();
+		System.out.println(cafeImage);
 		String sql = "insert into cafe values(?, ?, ?, ?, ?, ?, ?, 0)";
 		try {
 			int nextNum = -1;
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select nvl(max(num), 0) +1 from cafe");
+			rs = stmt.executeQuery("select nvl(max(cafe_num), 0) +1 from cafe");
 			if (rs.next()) {
 				nextNum = rs.getInt(1);
 			}
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1,  nextNum);
-			psmt.setString(2, cafe_name);
-			psmt.setString(3, cafe_address);
-			psmt.setString(4, cafe_phone);
-			psmt.setString(5, cafe_time);
-			psmt.setString(6, cafe_type);
-			psmt.setString(7, cafe_image);
+			psmt.setString(2, cafeName);
+			psmt.setString(3, cafeAdd);
+			psmt.setString(4, cafePhone);
+			psmt.setString(5, cafeTime);
+			psmt.setString(6, cafeImage);
+			psmt.setString(7, cafeType);
 			
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력.");
 			
 			PetCafeOneVO vo = new PetCafeOneVO();
-			vo.setCafeName(rs.getString("cafe_name"));
-			vo.setCafeAdd(rs.getString("cafe_add"));
-			vo.setCafePhone(rs.getString("cafe_phone"));
-			vo.setCafeTime(rs.getString("cafe_time"));
-			vo.setCafeType(rs.getString("cafe_type"));
-			vo.setCafeImage(rs.getString("cafe_image"));
-			vo.setCafeScore(rs.getInt(0));
+			vo.setCafeNum(nextNum);
+			vo.setCafeName(cafeName);
+			vo.setCafeAdd(cafeAdd);
+			vo.setCafePhone(cafePhone);
+			vo.setCafeTime(cafeTime);
+			vo.setCafeImage(cafeImage);
+			vo.setCafeType(cafeType);
+			vo.setCafeScore(0);
 			return vo;
 			
 		} catch(SQLException e) {
@@ -78,4 +82,31 @@ public class PetCafeDAO extends DAO {
 			disconnect();
 		}
 	}
+	
+	// 회원가입시 주소 중복체크
+		public String checkCafeAdd(PetCafeOneVO PetCafeOneVO) { // db의 cafe_add 값, 사용자가 입력한 cafe_add와 다름
+			connect();
+			String sql = "select cafe_add from cafe where cafe_add=?";
+			String result = null;
+
+			try {
+				psmt = conn.prepareStatement(sql); 
+				psmt.setString(1, PetCafeOneVO.getCafeAdd());
+
+				rs = psmt.executeQuery(); 
+
+				if (rs.next()) {
+					result = rs.getString("cafe_add"); // 쿼리 결과값에서 cafe_add 컬럼의 값
+				}
+
+				return result;
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			} finally {
+				disconnect();
+			}
+
+		}
 }

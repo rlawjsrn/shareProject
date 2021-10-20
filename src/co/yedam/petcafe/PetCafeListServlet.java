@@ -2,7 +2,6 @@ package co.yedam.petcafe;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -26,17 +25,16 @@ public class PetCafeListServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
-
+		
+		PrintWriter out = response.getWriter();
+		Gson gson = new GsonBuilder().create();
+		
 		PetCafeDAO dao = new PetCafeDAO();
 		List<PetCafeOneVO> list = dao.getCafeList();
-
-		Gson gson = new GsonBuilder().create(); // Gson 객체를 Gson 타입의 gson변수로 선언
-		response.getWriter().println(gson.toJson(list)); // list를 json문자열으로 변환 후 response함
-
-		System.out.println(list);
-
+		
+		out.println(gson.toJson(list));
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
