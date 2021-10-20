@@ -29,31 +29,36 @@ public class AddPetCafeServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		String cafeName = request.getParameter("name");
-		String cafeAddress = request.getParameter("add");
-		String cafePhone = request.getParameter("phone");
-		String cafeTime = request.getParameter("time");
-		String cafeType = request.getParameter("type");
-		String cafeImage = request.getParameter("image");
-		System.out.println("앞단 정보:" + cafeName + cafeAddress + cafePhone + cafeTime + cafeType + cafeImage);
+		ServletContext context = getServletContext();
+		String saveDir = context.getRealPath("upload");
+		int maxSize = 1024 * 1024 * 30;
+		String encoding = "UTF-8";
+		MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, encoding, new DefaultFileRenamePolicy()); //1. request, 2.saveDir, 3. maxFileSize, 4.encoding, 5. renamePolicy
+		
+		String cafeName = multi.getParameter("cafeName");
+		String cafeAdd = multi.getParameter("cafeAdd");
+		String cafePhone = multi.getParameter("cafePhone");
+		String cafeTime = multi.getParameter("cafeTime");
+		String cafeType = multi.getParameter("cafeType");
+		String cafeImage = multi.getFilesystemName("cafeImage"); //파일이름
+		
+//		System.out.println("name:"+ cafeName);
+//		System.out.println("add:" + cafeAdd);
+//		System.out.println("phone:"+ cafePhone);
+//		System.out.println("time:"+ cafeTime);
+//		System.out.println("type:"+ cafeType);
+//		System.out.println("image:"+ cafeImage);
 		
 		PetCafeDAO dao = new PetCafeDAO();
-		PetCafeOneVO vo = new PetCafeOneVO();
+		PetCafeOneVO vo = dao.uploadCafe(cafeName, cafeAdd, cafePhone, cafeTime, cafeImage, cafeType); //db 순서대로
 		
-		vo.setCafeName(cafeName);
-		vo.setCafeAdd(cafeAddress);
-		vo.setCafePhone(cafePhone);
-		vo.setCafeTime(cafeTime);
-		vo.setCafeType(cafeType);
-		vo.setCafeImage(cafeImage);
 		
-//		String dbAdd = dao.checkAdd(vo);
-//		int r = -1;
-//		
-//		if (dbAdd == null || db)
-//			
-		response.getWriter().println();
+
+		Gson gson = new GsonBuilder().create();
+		response.getWriter().println(gson.toJson(vo));
 		
+		System.out.println(saveDir);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
