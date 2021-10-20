@@ -52,8 +52,6 @@ public class AddPetCafeServlet extends HttpServlet {
 		PetCafeDAO dao = new PetCafeDAO();
 		PetCafeOneVO vo = dao.uploadCafe(cafeName, cafeAdd, cafePhone, cafeTime, cafeImage, cafeType); //db 순서대로
 		
-		
-
 		Gson gson = new GsonBuilder().create();
 		response.getWriter().println(gson.toJson(vo));
 		
