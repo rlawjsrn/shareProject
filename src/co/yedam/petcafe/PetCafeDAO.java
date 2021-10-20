@@ -5,9 +5,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.yedam.common.DAO;
-import co.yedam.member.MemberVO;
 
 public class PetCafeDAO extends DAO {
+	
+	//TOP 카페 조회
+	public List<PetCafeOneVO> getTopCafeList() {
+		connect();
+		List<PetCafeOneVO> list = new ArrayList<>();
+		String sql = "select * from cafe order by 8 desc;";
+
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				PetCafeOneVO vo = new PetCafeOneVO();
+				vo.setCafeNum(rs.getInt("cafe_num"));
+				vo.setCafeName(rs.getString("cafe_name"));
+				vo.setCafeAdd(rs.getString("cafe_add"));
+				vo.setCafePhone(rs.getString("cafe_phone"));
+				vo.setCafeTime(rs.getString("cafe_time"));
+				vo.setCafeImage(rs.getString("cafe_image"));
+				vo.setCafeType(rs.getString("cafe_type"));
+				vo.setCafeScore(rs.getInt("cafe_score")); // score 타입 int ->double 변경 필요
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
 	
 	//카페 전체조회
 	public List<PetCafeOneVO> getCafeList(){
