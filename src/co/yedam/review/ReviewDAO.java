@@ -25,7 +25,7 @@ public class ReviewDAO extends DAO {
 				vo.setRwComment(rs.getString("rw_content"));
 				vo.setRwId(rs.getString("rw_id"));
 				vo.setRwNum(rs.getInt("rw_num"));
-				vo.setRwScore(rs.getInt("rw_score"));
+				vo.setRwScore(rs.getDouble("rw_score"));
 
 				list.add(vo); // vo클래스를 list에 담음
 			}
@@ -46,7 +46,7 @@ public class ReviewDAO extends DAO {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, reviewVO.getRwcafeNum());
 			psmt.setString(2, reviewVO.getRwId());
-			psmt.setInt(3, reviewVO.getRwScore());
+			psmt.setDouble(3, reviewVO.getRwScore());
 			psmt.setString(4, reviewVO.getRwComment());
 			r = psmt.executeUpdate();
 
@@ -54,6 +54,7 @@ public class ReviewDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return -1;
 		} finally {
 			disconnect();
 		}
@@ -68,7 +69,7 @@ public class ReviewDAO extends DAO {
 		int r = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, reviewVO.getRwScore());
+			psmt.setDouble(1, reviewVO.getRwScore());
 			psmt.setString(2, reviewVO.getRwComment());
 			psmt.setInt(3, reviewVO.getRwNum());
 			r = psmt.executeUpdate();

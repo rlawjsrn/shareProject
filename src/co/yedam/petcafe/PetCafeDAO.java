@@ -26,7 +26,7 @@ public class PetCafeDAO extends DAO {
 				vo.setCafeTime(rs.getString("cafe_time"));
 				vo.setCafeImage(rs.getString("cafe_image"));
 				vo.setCafeType(rs.getString("cafe_type"));
-				vo.setCafeScore(rs.getInt("cafe_score")); // score 타입 int ->double 변경 필요
+				vo.setCafeScore(rs.getDouble("cafe_score")); // score 타입 int ->double 변경 필요
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class PetCafeDAO extends DAO {
 				vo.setCafeTime(rs.getString("cafe_time"));
 				vo.setCafeImage(rs.getString("cafe_image"));
 				vo.setCafeType(rs.getString("cafe_type"));
-				vo.setCafeScore(rs.getInt("cafe_score"));
+				vo.setCafeScore(rs.getDouble("cafe_score"));
 				list.add(vo);
 				System.out.println("vo:"+vo);
 			}

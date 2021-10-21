@@ -9,7 +9,7 @@ public class PetCafeOneVO {
 	private String cafeTime;
 	private String cafeImage;
 	private String cafeType;
-	private int cafeScore;
+	private double cafeScore;
 
 	public int getCafeNum() {
 		return cafeNum;
@@ -67,11 +67,11 @@ public class PetCafeOneVO {
 		this.cafeType = cafeType;
 	}
 
-	public int getCafeScore() {
+	public double getCafeScore() {
 		return cafeScore;
 	}
 
-	public void setCafeScore(int cafeScore) {
+	public void setCafeScore(double cafeScore) {
 		this.cafeScore = cafeScore;
 	}
 

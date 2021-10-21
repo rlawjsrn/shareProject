@@ -44,6 +44,9 @@
 				console.log(result);
 
 				if (result == 1) { //1로 반환되면 성공
+					sessionStorage.setItem('userId', result); //세션 설정
+					console.log('userId: ' + result);
+
 					window.location.href = '../petcafe/Main.html'; //성공시 메인화면으로 넘겨주기
 					//window.alert('로그인 성공:)');
 				} else if (result == 0) { //0으로 반환되면 실패
@@ -57,25 +60,6 @@
 				console.log(reject);
 			}
 		});
-	}
-	
-	function setCookie(cname, cval) {
-		const times = 3;
-		const d = new Date(); //현재시간 기준
-		d.setTime(d.getTime() + 1000 * 60); //1000(1초)  30초 뒤에 expire됨.
-		document.cookie = cname + '=' + cval + '; expires=' + d.toUTCString
-				+ '; path=/';
-	}
-
-	function getCookie(cname) {
-		let cookies = document.cookie.split('; ');//split: 배열값으로 저장하는 메소드
-		for (let i = 0; i < cookies.length; i++) {
-			if (cookies[i].indexOf(cname) === 0) {
-				let result = cookies[i].substring(cname.length + 1);
-				return result;
-			}
-		}
-		return null;
 	}
 </script>
 <style>

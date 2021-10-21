@@ -16,9 +16,7 @@
 <script src="../jquery/jquery-3.6.0.min.js"></script>
 
 <script>
-	<%
-	String cafeNum = request.getParameter("cafe_num");
-	%>
+	<%String cafeNum = request.getParameter("cafe_num");%>
 	//윈도우 페이지 여는 순간 onload
 	window.onload = function() { //onload 이벤트는 페이지가 다 로딩된 다음에 실행함.
 		loadCafeOne();
@@ -46,41 +44,43 @@
 			}
 		});
 	}
-	
-	//리뷰 등록하기
-	function review() {
-		let content = $('#textarea').val();
-		let score = 
-	}
-	
-	
-	//등록된 후기 보여주기
-	function showReview() {
+
+	function review(event) {
+		event.preventDefault();
+
+		let rwId = sessionStorage.getItem('userId');
+		let rwComment = $('#textarea').val();
+		let rwScore = $('#showBtn').html();
+
 		$.ajax({
-			url : '../PetCafeOneServlet',
-			type : 'post',
+			url : '../ReviewServlet',
+			type : 'post', //요청방식
 			data : {
-				writer : memberId,
-				score : cafeScore,
-				content : content
+				writer : rwId,
+				content : rwComment,
+				score : rwScore
 			},
 			dataType : 'json',
 			success : function(result) {
 				console.log(result);
-				
+				if (result != -1) {
+					window.alert('후기 등록 성공');
+				} else {
+					window.alert('프로그램 실행 오류');
+				}
 			},
-			error : function(reject){
-				console.log(reject);
-				
+			error : function(reject) {
+				window.alert('프로그램 실행 에러');
 			}
-		}) 
-	}
-	
 
+		});
+	}
 	
 </script>
 <style>
-nav { height: 100px; }
+nav {
+	height: 100px;
+}
 </style>
 </head>
 
@@ -89,7 +89,8 @@ nav { height: 100px; }
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img src="../image/로고사진.jpg"
 				alt="Logo" style="width: 100px; align-content: center;"
-				class="rounded-pill" onclick="location.href='../petcafe/Main.html'"> 어서오시개
+				class="rounded-pill" onclick="location.href='../petcafe/Main.html'">
+				어서오시개
 			</a>
 		</div>
 	</nav>
@@ -104,16 +105,15 @@ nav { height: 100px; }
 		<div class="col-sm-4">
 			<form action="">
 				카페이름<input type="text" class="form-control" value=""
-					style="text-align: center;" id="cafename"
-					name="cafename"><br> 주소<input type="text"
-					class="form-control" value="" style="text-align: center;" id="addr"
-					name="addr"><br> 연락처<input type="text"
-					class="form-control" value="" style="text-align: center;" id="call"
-					name="call"><br> 영업시간<input type="text"
-					class="form-control" value="" style="text-align: center;" id="time"
-					name="time"><br> 유형<input type="text"
-					class="form-control" value="" style="text-align: center;" id="type"
-					name="type"><br>
+					style="text-align: center;" id="cafename" name="cafename"><br>
+				주소<input type="text" class="form-control" value=""
+					style="text-align: center;" id="addr" name="addr"><br>
+				연락처<input type="text" class="form-control" value=""
+					style="text-align: center;" id="call" name="call"><br>
+				영업시간<input type="text" class="form-control" value=""
+					style="text-align: center;" id="time" name="time"><br>
+				유형<input type="text" class="form-control" value=""
+					style="text-align: center;" id="type" name="type"><br>
 			</form>
 		</div>
 		<div class="col-sm-2"></div>
@@ -150,31 +150,39 @@ nav { height: 100px; }
 				</div>
 
 				<div class="dropdown">
-					<button type="button"
+					<button type="button" id="showBtn"
 						class="btn btn-primary dropdown-toggle btn-sm"
 						data-bs-toggle="dropdown">평점</button>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item">5</a></li>
-						<li><a class="dropdown-item">4.5</a></li>
-						<li><a class="dropdown-item">4</a></li>
-						<li><a class="dropdown-item">3.5</a></li>
-						<li><a class="dropdown-item">3</a></li>
-						<li><a class="dropdown-item">2.5</a></li>
-						<li><a class="dropdown-item">2</a></li>
-						<li><a class="dropdown-item">1.5</a></li>
-						<li><a class="dropdown-item">1</a></li>
+						<li><a onclick="showPoint(5)" class="dropdown-item">5</a></li>
+						<li><a onclick="showPoint(4.5)" class="dropdown-item">4.5</a></li>
+						<li><a onclick="showPoint(4)" class="dropdown-item">4</a></li>
+						<li><a onclick="showPoint(3.5)" class="dropdown-item">3.5</a></li>
+						<li><a onclick="showPoint(3)" class="dropdown-item">3</a></li>
+						<li><a onclick="showPoint(2.5)" class="dropdown-item">2.5</a></li>
+						<li><a onclick="showPoint(2)" class="dropdown-item">2</a></li>
+						<li><a onclick="showPoint(1.5)" class="dropdown-item">1.5</a></li>
+						<li><a onclick="showPoint(1)" class="dropdown-item">1</a></li>
 					</ul>
 				</div>
 				<br>
 
-				<button type="submit" class="btn btn-primary btn-sm">후기등록</button>
+				<button type="submit" onclick="review(event)"
+					class="btn btn-primary btn-sm">후기등록</button>
 			</form>
 
 		</div>
 		<div class="col-sm-2"></div>
 
 	</div>
-
+	<script>
+		//평점 누르면 선택한 평점으로 바뀜(?)
+		function showPoint(num) {
+			let p = document.createElement('p');
+			p.innerHTML = num;
+			document.getElementById('showBtn').innerHTML = num;
+		}
+	</script>
 </body>
 
 </html>

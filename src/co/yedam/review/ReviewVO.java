@@ -5,7 +5,7 @@ public class ReviewVO {
 	private int rwNum;
 	private int rwcafeNum;
 	private String rwId;
-	private int rwScore;
+	private double rwScore;
 	private String rwComment;
 	public int getRwNum() {
 		return rwNum;
@@ -25,10 +25,10 @@ public class ReviewVO {
 	public void setRwId(String rwId) {
 		this.rwId = rwId;
 	}
-	public int getRwScore() {
+	public double getRwScore() {
 		return rwScore;
 	}
-	public void setRwScore(int rwScore) {
+	public void setRwScore(double rwScore) {
 		this.rwScore = rwScore;
 	}
 	public String getRwComment() {
