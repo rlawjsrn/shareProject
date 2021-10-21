@@ -33,6 +33,7 @@ public class ReviewServlet extends HttpServlet {
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
 		double score = Double.parseDouble(request.getParameter("score"));
+		int cafeNum = Integer.parseInt(request.getParameter("cafeNum"));
 		
 		//DAO호출
 		ReviewDAO dao = new ReviewDAO();
@@ -42,6 +43,7 @@ public class ReviewServlet extends HttpServlet {
 		vo.setRwId(writer);
 		vo.setRwComment(content);
 		vo.setRwScore(score);
+		vo.setRwcafeNum(cafeNum);
 		
 		int r = dao.insertReview(vo);
 		PrintWriter out = response.getWriter();

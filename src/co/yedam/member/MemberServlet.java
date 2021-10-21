@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @WebServlet("/MemberServlet")
 public class MemberServlet extends HttpServlet {
@@ -19,7 +21,7 @@ public class MemberServlet extends HttpServlet {
 	}
 
 	// 로그인 서블릿
-	protected void doGet(HttpServletRequest request, HttpServletResponse response )
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/json;charset=UTF-8");
@@ -42,21 +44,20 @@ public class MemberServlet extends HttpServlet {
 		vo = dao.checkMember(vo); // =은 같다의 뜻이 아닌 오른쪽을 왼쪽에 '담는다'는 뜻
 
 		// db에서 가져온 값을 저장.
-		String dbId = vo.getUserId();
-		String dbPw = vo.getUserPw();
-		System.out.println("백단 정보: " + dbId + dbPw);
+//		String dbId = vo.getUserId();
+//		String dbPw = vo.getUserPw();
+//		System.out.println("백단 정보: " + dbId + dbPw);
 
-		//로그인 일치 검사
-		int r = -1;
-		if (userId.equals(dbId) && userPw.equals(dbPw)) { //로그인 성공
-			r = 1;
-		}else {//로그인 실패
-			r = 0;
-		}
-		
-		System.out.println(r);
-		
-		response.getWriter().println(r);
+		// 로그인 일치 검사
+//		int r = -1;
+//		if (userId.equals(dbId) && userPw.equals(dbPw)) { //로그인 성공
+//			response.getWriter()
+//		}else {//로그인 실패
+//			r = 0;
+//		}
+
+		Gson gson = new GsonBuilder().create();
+		response.getWriter().println(gson.toJson(vo));
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

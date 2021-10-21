@@ -17,12 +17,12 @@ public class MemberDAO extends DAO {
 			psmt.setString(2, memberVO.getUserPw());
 			psmt.setString(3, memberVO.getUserEmail());
 			psmt.setString(4, memberVO.getUserPhone());
-			
+
 			int r = psmt.executeUpdate(); // db결과로 나오는 숫자값(몇 건)
 			System.out.println(r + "건 등록");
 
 			return r;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
@@ -73,9 +73,8 @@ public class MemberDAO extends DAO {
 			if (rs.next()) {
 				memberVO.setUserId(rs.getString("user_id"));
 				memberVO.setUserPw(rs.getString("user_pw"));
+				return memberVO;
 			}
-
-			return memberVO;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -83,6 +82,6 @@ public class MemberDAO extends DAO {
 		} finally {
 			disconnect();
 		}
-
+		return null;
 	}
 }

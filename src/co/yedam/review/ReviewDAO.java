@@ -39,6 +39,7 @@ public class ReviewDAO extends DAO {
 
 	// 리뷰 등록하기
 	public int insertReview(ReviewVO reviewVO) {
+		System.out.println(reviewVO);
 		connect();
 		String sql = "insert into review values(rw_num.nextval, ?, ?, ?, ?)";
 		int r = 0;

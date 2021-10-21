@@ -31,6 +31,7 @@
 			},
 			dataType : 'json',
 			success : function(result) { //result: servlet에서 반환되는 변수명
+				
 				image.setAttribute('src', '../image/' + result.cafeImage);
 				document.getElementById('cafename').value = result.cafeName;
 				document.getElementById('addr').value = result.cafeAdd;
@@ -45,36 +46,84 @@
 		});
 	}
 
+	//리뷰 등록페이지
 	function review(event) {
 		event.preventDefault();
 
 		let rwId = sessionStorage.getItem('userId');
-		let rwComment = $('#textarea').val();
+		let rwComment = $('#comment').val();
 		let rwScore = $('#showBtn').html();
 
+		console.log(rwComment);
 		$.ajax({
 			url : '../ReviewServlet',
 			type : 'post', //요청방식
 			data : {
 				writer : rwId,
 				content : rwComment,
-				score : rwScore
+				score : rwScore,
+				cafeNum : "<%=cafeNum%>"
 			},
 			dataType : 'json',
 			success : function(result) {
 				console.log(result);
-				if (result != -1) {
+				if (result.Code == 'success') {
 					window.alert('후기 등록 성공');
 				} else {
 					window.alert('프로그램 실행 오류');
 				}
+			},
+				//for (let row of result){
+					//$('#review').append(createTd(row));
+				//}
+				
 			},
 			error : function(reject) {
 				window.alert('프로그램 실행 에러');
 			}
 
 		});
+		
+/* 		//등록된 리뷰 리스트 보여주기(?)
+		function showReviewList() {
+			
+		}
+	//등록된 리뷰 리스트 열 추가
+	function createTd(row) {
+		let tdRow = $('<tr />').addClass('');
+		$(tdRow).append(//
+			$('<td />').html(row.rwId),//
+			$('<td />').html(row.rwScore),//
+			$('<td />').html(row.rwComment),//
+	);
+
+		return tdRow;
+	} */
 	}
+	
+	function showReview(){
+	$.ajax({
+		url : '../PetCafeOneServlet',
+		type : 'post', //요청방식
+		data : { //서버로 전송할 전체 리스트 페이지에서 클릭한 cafe_num 데이터
+			cafeNum : "<%=cafeNum%>"
+		},
+		dataType : 'json',
+		success : function(result) { //result: servlet에서 반환되는 변수명
+			
+			image.setAttribute('src', '../image/' + result.cafeImage);
+			document.getElementById('cafename').value = result.cafeName;
+			document.getElementById('addr').value = result.cafeAdd;
+			document.getElementById('call').value = result.cafePhone;
+			document.getElementById('time').value = result.cafeTime;
+			document.getElementById('type').value = result.cafeType;
+			console.log(result);
+		},
+		error : function(reject) {
+			window.alert('프로그램 실행 오류');
+		}
+	});
+}
 	
 </script>
 <style>
@@ -132,12 +181,9 @@ nav {
 							<th style="text-align: center;">작성자</th>
 							<th style="text-align: center;">평점</th>
 							<th style="text-align: center;">후기</th>
-							<th style="text-align: center;">수정</th>
-							<th style="text-align: center;">삭제</th>
 						</tr>
 					</thead>
-					<tbody>
-
+					<tbody id ="review">
 					</tbody>
 				</table>
 			</form>
