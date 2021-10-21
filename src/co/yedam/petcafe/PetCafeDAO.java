@@ -12,7 +12,8 @@ public class PetCafeDAO extends DAO {
 	public List<PetCafeOneVO> getTopCafeList() {
 		connect();
 		List<PetCafeOneVO> list = new ArrayList<>();
-		String sql = "select * from cafe order by 8 desc;";
+		// rownum<=5: 상위 5개 지정, order by 8:평점순
+		String sql = "select * from cafe where rownum<=5 order by 8 desc";
 
 		try {
 			stmt = conn.createStatement();
@@ -26,8 +27,9 @@ public class PetCafeDAO extends DAO {
 				vo.setCafeTime(rs.getString("cafe_time"));
 				vo.setCafeImage(rs.getString("cafe_image"));
 				vo.setCafeType(rs.getString("cafe_type"));
-				vo.setCafeScore(rs.getInt("cafe_score")); // score 타입 int ->double 변경 필요
+				vo.setCafeScore(rs.getDouble("cafe_score"));
 				list.add(vo);
+				System.out.println("Top vo:"+vo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -110,31 +112,32 @@ public class PetCafeDAO extends DAO {
 			disconnect();
 		}
 	}
-	
-	// 회원가입시 주소 중복체크
-		public String checkCafeAdd(PetCafeOneVO PetCafeOneVO) { // db의 cafe_add 값, 사용자가 입력한 cafe_add와 다름
-			connect();
-			String sql = "select cafe_add from cafe where cafe_add=?";
-			String result = null;
-
-			try {
-				psmt = conn.prepareStatement(sql); 
-				psmt.setString(1, PetCafeOneVO.getCafeAdd());
-
-				rs = psmt.executeQuery(); 
-
-				if (rs.next()) {
-					result = rs.getString("cafe_add"); // 쿼리 결과값에서 cafe_add 컬럼의 값
-				}
-
-				return result;
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return null;
-			} finally {
-				disconnect();
-			}
-
-		}
+		
+//	// 카페등록 시 주소 중복체크
+//		public String checkCafeAdd(PetCafeOneVO PetCafeOneVO) { // db의 cafe_add 값, 사용자가 입력한 cafe_add와 다름
+//			connect();
+//			String sql = "select cafe_add from cafe where cafe_add=?";
+//			String result = null;
+//
+//			try {
+//				psmt = conn.prepareStatement(sql); 
+//				psmt.setString(1, PetCafeOneVO.getCafeAdd());
+//
+//				rs = psmt.executeQuery(); 
+//
+//				if (rs.next()) {
+//					result = rs.getString("cafe_add"); // 쿼리 결과값에서 cafe_add 컬럼의 값
+//				}
+//
+//				return result;
+//
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//				return null;
+//			} finally {
+//				disconnect();
+//			}
+//
+//		}
+		
 }
