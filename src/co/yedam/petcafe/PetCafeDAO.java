@@ -40,6 +40,74 @@ public class PetCafeDAO extends DAO {
 		return list;
 	}
 	
+	//TOP 카페 조회(실내)
+	public List<PetCafeOneVO> getTopCafeInside() {
+		connect();
+		List<PetCafeOneVO> list = new ArrayList<>();
+		String sql = "select * from cafe \r\n"
+				+ "where rownum<=5 and cafe_type = '실내'\r\n"
+				+ "order by 8 desc";
+
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				PetCafeOneVO vo = new PetCafeOneVO();
+				vo.setCafeNum(rs.getInt("cafe_num"));
+				vo.setCafeName(rs.getString("cafe_name"));
+				vo.setCafeAdd(rs.getString("cafe_add"));
+				vo.setCafePhone(rs.getString("cafe_phone"));
+				vo.setCafeTime(rs.getString("cafe_time"));
+				vo.setCafeImage(rs.getString("cafe_image"));
+				vo.setCafeType(rs.getString("cafe_type"));
+				vo.setCafeScore(rs.getDouble("cafe_score"));
+
+				list.add(vo);
+				System.out.println("TopOut:"+vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+	
+	
+	//TOP 카페 조회(실외)
+	public List<PetCafeOneVO> getTopCafeOutdoor() {
+		connect();
+		List<PetCafeOneVO> list = new ArrayList<>();
+		String sql = "select * from cafe \r\n"
+				+ "where rownum<=5 and cafe_type = '실외'\r\n"
+				+ "order by 8 desc";
+
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				PetCafeOneVO vo = new PetCafeOneVO();
+				vo.setCafeNum(rs.getInt("cafe_num"));
+				vo.setCafeName(rs.getString("cafe_name"));
+				vo.setCafeAdd(rs.getString("cafe_add"));
+				vo.setCafePhone(rs.getString("cafe_phone"));
+				vo.setCafeTime(rs.getString("cafe_time"));
+				vo.setCafeImage(rs.getString("cafe_image"));
+				vo.setCafeType(rs.getString("cafe_type"));
+				vo.setCafeScore(rs.getDouble("cafe_score"));
+
+				list.add(vo);
+				System.out.println("TopOut:"+vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+	
+	
 	//카페 전체조회
 	public List<PetCafeOneVO> getCafeList(){
 		connect();

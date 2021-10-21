@@ -73,9 +73,7 @@
 					window.alert('프로그램 실행 오류');
 				}
 			},
-				//for (let row of result){
-					//$('#review').append(createTd(row));
-				//}
+				
 				
 			},
 			error : function(reject) {
@@ -84,10 +82,7 @@
 
 		});
 		
-/* 		//등록된 리뷰 리스트 보여주기(?)
-		function showReviewList() {
-			
-		}
+/* 		
 	//등록된 리뷰 리스트 열 추가
 	function createTd(row) {
 		let tdRow = $('<tr />').addClass('');
@@ -103,20 +98,19 @@
 	
 	function showReview(){
 	$.ajax({
-		url : '../PetCafeOneServlet',
+		url : '../ReviewServlet',
 		type : 'post', //요청방식
-		data : { //서버로 전송할 전체 리스트 페이지에서 클릭한 cafe_num 데이터
-			cafeNum : "<%=cafeNum%>"
-		},
 		dataType : 'json',
 		success : function(result) { //result: servlet에서 반환되는 변수명
+		
+			document.getElementById('1').value = result.rwId;
+			document.getElementById('2').value = result.rwScore;
+			document.getElementById('3').value = result.rwComment;
 			
-			image.setAttribute('src', '../image/' + result.cafeImage);
-			document.getElementById('cafename').value = result.cafeName;
-			document.getElementById('addr').value = result.cafeAdd;
-			document.getElementById('call').value = result.cafePhone;
-			document.getElementById('time').value = result.cafeTime;
-			document.getElementById('type').value = result.cafeType;
+			for (let row of result){
+			$('#review').append(createTd(row));
+		}
+		
 			console.log(result);
 		},
 		error : function(reject) {
@@ -178,9 +172,9 @@ nav {
 				<table class="table">
 					<thead class="table-dark">
 						<tr>
-							<th style="text-align: center;">작성자</th>
-							<th style="text-align: center;">평점</th>
-							<th style="text-align: center;">후기</th>
+							<th style="text-align: center;" id="1">작성자</th>
+							<th style="text-align: center;" id="2">평점</th>
+							<th style="text-align: center;" id="3">후기</th>
 						</tr>
 					</thead>
 					<tbody id ="review">
