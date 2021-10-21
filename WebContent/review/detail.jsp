@@ -85,6 +85,7 @@
 
 	}
 	
+	//리뷰 리스트 보여주기
 	function showReview(){
 	$.ajax({
 		url : '../ReviewListServlet',

@@ -39,6 +39,8 @@ public class ReviewListServlet extends HttpServlet {
 		ReviewDAO dao = new ReviewDAO();
 		List<ReviewVO> list = dao.getReviewList(cafeNum);
 		
+		System.out.println(list);
+		System.out.println(cafeNum);
 		out.println(gson.toJson(list));
 	}
 
