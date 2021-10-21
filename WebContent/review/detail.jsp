@@ -106,7 +106,22 @@
 			window.alert('프로그램 실행 오류');
 		}
 	});
+	
+	function createTd(row) { //열 추가
+		let tdRow = $('<tr />').addClass('').attr('id',row.cafeNum); //열 추가할 때 id의 값을 각 cafeNum으로 지정해줌
+		$(tdRow).append(//
+				$('<td />').html(row.rwId),//
+				$('<td />').html(row.rwComment),//
+				$('<td />').html(row.rwScore),//
+			
+				);
+		
+		return tdRow;
+	}
 }
+	
+	
+	
 	
 </script>
 <style>

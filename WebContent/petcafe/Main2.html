@@ -96,7 +96,8 @@
 						img.setAttribute('src', '../image/' + cafe.cafeImage);
 						img.setAttribute
 						img.setAttribute("height", "200");
-
+						img.onclick = function(){
+		                     location.href = 'http://localhost/shareProject/review/detail.jsp?cafe_num='+cafe.cafeNum;};
 						// 카페이름
 						let itemDiv = document.createElement('div');
 						itemDiv.className = "card-body p-4";
