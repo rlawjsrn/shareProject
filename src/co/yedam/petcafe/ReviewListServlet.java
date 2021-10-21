@@ -37,7 +37,7 @@ public class ReviewListServlet extends HttpServlet {
 		Gson gson = new GsonBuilder().create();
 		
 		ReviewDAO dao = new ReviewDAO();
-		List<ReviewVO> list = dao.getReviewList(cafeNum);
+		//List<ReviewVO> list = dao.getReviewList(cafeNum);
 		
 		System.out.println(list);
 		System.out.println(cafeNum);
