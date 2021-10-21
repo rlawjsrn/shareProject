@@ -20,6 +20,7 @@
 	//윈도우 페이지 여는 순간 onload
 	window.onload = function() { //onload 이벤트는 페이지가 다 로딩된 다음에 실행함.
 		loadCafeOne();
+		showReview();
 	}
 	//상세 조회하는 함수
 	function loadCafeOne() {
@@ -69,12 +70,11 @@
 				console.log(result);
 				if (result.Code == 'success') {
 					window.alert('후기 등록 성공');
+					showReview();
+					
 				} else {
 					window.alert('프로그램 실행 오류');
 				}
-			},
-				
-				
 			},
 			error : function(reject) {
 				window.alert('프로그램 실행 에러');
@@ -82,31 +82,19 @@
 
 		});
 		
-/* 		
-	//등록된 리뷰 리스트 열 추가
-	function createTd(row) {
-		let tdRow = $('<tr />').addClass('');
-		$(tdRow).append(//
-			$('<td />').html(row.rwId),//
-			$('<td />').html(row.rwScore),//
-			$('<td />').html(row.rwComment),//
-	);
 
-		return tdRow;
-	} */
 	}
 	
 	function showReview(){
 	$.ajax({
-		url : '../ReviewServlet',
+		url : '../ReviewListServlet',
 		type : 'post', //요청방식
+		data : {
+			cafeNum : "<%=cafeNum%>"
+		},
 		dataType : 'json',
 		success : function(result) { //result: servlet에서 반환되는 변수명
 		
-			document.getElementById('1').value = result.rwId;
-			document.getElementById('2').value = result.rwScore;
-			document.getElementById('3').value = result.rwComment;
-			
 			for (let row of result){
 			$('#review').append(createTd(row));
 		}

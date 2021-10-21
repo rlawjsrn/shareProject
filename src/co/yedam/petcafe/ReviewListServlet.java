@@ -13,33 +13,37 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/PetCafeListServlet")
-public class PetCafeListServlet extends HttpServlet {
+import co.yedam.review.ReviewDAO;
+import co.yedam.review.ReviewVO;
+
+
+@WebServlet("/ReviewListServlet")
+public class ReviewListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+    
+    public ReviewListServlet() {
+        super();
+      }
 
-	public PetCafeListServlet() {
-		super();
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		
+		int cafeNum = Integer.parseInt(request.getParameter("cafeNum"));
 		
 		PrintWriter out = response.getWriter();
 		Gson gson = new GsonBuilder().create();
 		
-		PetCafeDAO dao = new PetCafeDAO();
-		List<PetCafeOneVO> list = dao.getCafeList();
+		ReviewDAO dao = new ReviewDAO();
+		List<ReviewVO> list = dao.getReviewList(cafeNum);
 		
 		out.println(gson.toJson(list));
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		doGet(request, response);
 	}
 
