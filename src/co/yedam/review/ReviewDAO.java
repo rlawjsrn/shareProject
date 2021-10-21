@@ -22,7 +22,7 @@ public class ReviewDAO extends DAO {
 			while (rs.next()) {
 				ReviewVO vo = new ReviewVO();
 				vo.setRwcafeNum(rs.getInt("rwcafe_num"));
-				vo.setRwComment(rs.getString("rw_content"));
+				vo.setRwComment(rs.getString("rw_comment"));
 				vo.setRwId(rs.getString("rw_id"));
 				vo.setRwNum(rs.getInt("rw_num"));
 				vo.setRwScore(rs.getDouble("rw_score"));
